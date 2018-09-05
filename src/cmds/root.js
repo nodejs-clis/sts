@@ -45,7 +45,7 @@ cli
         var webroot = process.cwd();
         server(webroot, args.port, function (err) {
             if (err) {
-                console.errorWithTime('sts', err.message);
+                console.errorWithTime(err.message);
                 return process.exit(1);
             }
 

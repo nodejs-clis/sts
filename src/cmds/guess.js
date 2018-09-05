@@ -14,7 +14,7 @@ var console = require('blear.node.console');
 
 var portRE = /^[1-9]\d+$/;
 var httpRE = /^http(s)?:\/\//;
-var domainRE = /^(.*?)(?::(\d+))?$/;
+var domainRE = /^(?:\/\/)?(.*?)(?::(\d+))?$/;
 
 cli.guess(function (command, args, params) {
     // 指定端口

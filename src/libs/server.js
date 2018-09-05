@@ -50,12 +50,12 @@ marked.setOptions({
 module.exports = function (webroot, port, callback) {
     var args = access.args(arguments);
 
-    switch (args.length){
+    switch (args.length) {
         case 2:
-            if(typeis.Function(args[1])){
+            if (typeis.Function(args[1])) {
                 callback = args[1];
                 port = 0;
-            }else{
+            } else {
                 callback = noop;
             }
             break;
@@ -152,7 +152,13 @@ module.exports = function (webroot, port, callback) {
         });
     });
 
-    app.listen(port, callback);
+
+    try {
+        app.listen(port, callback);
+    } catch (err) {
+        return callback(err);
+    }
+
     app.on('error', callback);
 };
 
