@@ -26,7 +26,7 @@
   "readmeFilename": "readme.md",
   "dependencies": {
     "blear.classes.template": "^2.0.8",
-    "blear.node.cli": "^1.4.1",
+    "blear.node.cli": "^1.4.2",
     "blear.node.console": "^1.1.3",
     "blear.node.debug": "^1.0.4",
     "blear.node.encryption": "^1.0.2",
