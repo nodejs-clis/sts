@@ -6,35 +6,32 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var mime = require('ydr-utils').mime;
-var number = require('ydr-utils').number;
-var httpStatus = require('ydr-utils').httpStatus;
-var typeis = require('ydr-utils').typeis;
-var encryption = require('ydr-utils').encryption;
-var Template = require('ydr-utils').Template;
-var allocation = require('ydr-utils').allocation;
+var mime = require('blear.node.mime');
+var number = require('blear.utils.number');
+var typeis = require('blear.utils.typeis');
+var encryption = require('blear.node.encryption');
+var Template = require('blear.classes.template');
+var access = require('blear.utils.access');
 var urlHelper = require('url');
 var http = require('http');
+var httpStatus = require('http').STATUS_CODES;
 var path = require('path');
 var fs = require('fs');
 var marked = require('marked');
 var highlight = require('highlight.js');
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
-var template = fs.readFileSync(path.join(__dirname, '../static/tpl.html'), 'utf8');
+var template = fs.readFileSync(path.join(__dirname, '../../static/tpl.html'), 'utf8');
 var tpl;
-var style = fs.readFileSync(path.join(__dirname, '../static/style.css'), 'utf8');
+var style = fs.readFileSync(path.join(__dirname, '../../static/style.css'), 'utf8');
 var REG_PARENT_PATH = /^\.\.[\/\\]/;
 var DEFAULTFILE = 'index.html';
-//var REG_STREAM = /^(video|audio)\//;
-var REG_NUMBER = /^[1-9]\d*$/;
 var noop = function () {
     // ignore
 };
 
-template = template.replace(/\{\{style}}/, '<style>' + style + '</style>');
+template = template.replace(/{{style}}/, '<style>' + style + '</style>');
 tpl = new Template(template);
 marked.setOptions({
     highlight: function (code) {
@@ -47,15 +44,15 @@ marked.setOptions({
 /**
  * 启动一个 HTTP 服务器
  * @param webroot {String} 网站根目录
- * @param [port] {String} 端口，默认80
+ * @param [port] {String} 端口，默认 0，即自动端口
  * @param [callback] 启动后回调
  */
 module.exports = function (webroot, port, callback) {
-    var args = allocation.args(arguments);
+    var args = access.args(arguments);
 
     switch (args.length){
         case 2:
-            if(typeis.function(args[1])){
+            if(typeis.Function(args[1])){
                 callback = args[1];
                 port = 0;
             }else{
@@ -169,7 +166,7 @@ module.exports = function (webroot, port, callback) {
  * @private
  */
 function _errRes(code, req, res, err) {
-    var msg = httpStatus.get(code);
+    var msg = httpStatus[code];
 
     res.writeHead(code, {
         'content-type': mime.get('.html') + '; charset=utf-8'
