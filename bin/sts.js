@@ -5,8 +5,7 @@
 
 var cli = require('blear.node.cli');
 
-cli.banner('');
-
+require('../src/cmds/banner');
 require('../src/cmds/root');
 require('../src/cmds/version');
 require('../src/cmds/guess');

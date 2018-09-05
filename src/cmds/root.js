@@ -12,6 +12,7 @@
 var cli = require('blear.node.cli');
 var system = require('blear.node.system');
 var console = require('blear.node.console');
+var open = require('open');
 
 var server = require('../libs/server');
 
@@ -41,7 +42,6 @@ cli
             args.port = '443';
         }
 
-        console.log('root', args, params);
         server(process.cwd(), args.port, function (err) {
             if (err) {
                 console.errorWithTime('sts', err.message);
@@ -53,9 +53,9 @@ cli
             var secure = args.https ? 's' : '';
             var url = 'http' + secure + '://' + domain + ':' + port + '/';
 
-            console.infoWithTime('A static server is running.');
-            console.infoWithTime('open', url);
-            console.log();
+            console.infoWithTime('a STatic Server is running.');
+            console.infoWithTime(url);
+            open(url);
         });
     });
 
