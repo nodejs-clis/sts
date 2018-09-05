@@ -10,11 +10,7 @@
     "server",
     "sts"
   ],
-  "author": {
-    "name": "cloudcome",
-    "email": "cloudcome@163.com",
-    "url": "https://ydr.me/"
-  },
+  "author": "#云淡然<cloudcome@163.com>",
   "homepage": "https://github.com/nodejs-clis/sts",
   "repository": {
     "type": "git",

@@ -10,9 +10,11 @@
 
 var cli = require('blear.node.cli');
 var url = require('blear.utils.url');
+var console = require('blear.node.console');
 
 var portRE = /^[1-9]\d+$/;
 var httpRE = /^http(s)?:\/\//;
+var domainRE = /^(.*?)(?::(\d+))?$/;
 
 cli.guess(function (command, args, params) {
     // 指定端口
@@ -28,7 +30,19 @@ cli.guess(function (command, args, params) {
     }
     // 指定域名
     else {
-        args.domain = command;
+        var matches = command.match(domainRE);
+
+        if (!matches) {
+            console.errorWithTime('I still don\'t know what you mean, look at help.');
+            cli.help('');
+            return;
+        }
+
+        if (matches[2]) {
+            args.port = matches[2];
+        }
+
+        args.domain = matches[1];
     }
 
     cli.exec('', args, params);

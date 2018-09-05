@@ -42,7 +42,8 @@ cli
             args.port = '443';
         }
 
-        server(process.cwd(), args.port, function (err) {
+        var webroot = process.cwd();
+        server(webroot, args.port, function (err) {
             if (err) {
                 console.errorWithTime('sts', err.message);
                 return process.exit(1);
@@ -54,7 +55,8 @@ cli
             var url = 'http' + secure + '://' + domain + ':' + port + '/';
 
             console.infoWithTime('a STatic Server is running.');
-            console.infoWithTime(url);
+            console.infoWithTime('webroot', webroot);
+            console.infoWithTime('homeurl', url);
             open(url);
         });
     });
