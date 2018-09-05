@@ -19,6 +19,7 @@ cli
     .command()
     .usage('sts [options]', '随机端口在当前目录启动一个静态服务器')
     .usage('sts <port> [options]', '指定端口在当前目录启动一个静态服务器')
+    .usage('sts <origin>', '指定协议、域名、端口在当前目录启动一个静态服务器')
     .option('port', {
         alias: 'p',
         description: '指定端口（默认随机端口）',
