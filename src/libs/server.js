@@ -88,10 +88,10 @@ module.exports = function (webroot, port, callback) {
         var reqFile = path.join(webroot, pathname);
         var relative = path.relative(webroot, reqFile);
 
-        // 只接受 GET 和 POST 请求
-        if (req.method !== 'GET' && req.method !== 'POST') {
-            return _errRes(403, req, res);
-        }
+        // // 只接受 GET 和 POST 请求
+        // if (req.method !== 'GET' && req.method !== 'POST') {
+        //     return _errRes(403, req, res);
+        // }
 
         // 开头为 ..\ 或者 ../，说明是想访问父级目录，绝对禁止
         if (REG_PARENT_PATH.test(relative)) {
@@ -206,6 +206,7 @@ function _fileRes(file, req, res, extname, html) {
     var range;
     var positions;
     var start;
+    var method = req.method;
 
     extname = extname || path.extname(file);
     var contentType = mime.get(extname);
@@ -214,6 +215,10 @@ function _fileRes(file, req, res, extname, html) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.statusCode = headerModified === lastModified ? 304 : 200;
+
+    if(method === 'HEAD') {
+        return res.end();
+    }
 
     // stream
     if (req.headers.range) {
